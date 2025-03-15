@@ -1,6 +1,6 @@
 import React, {useRef,useState} from "react";
 import Editor from "@monaco-editor/react";
-import exObj from "../algos";
+import { allFuncs, allTests } from "../algos";
 import { editor } from "monaco-editor";
 
 /*
@@ -11,10 +11,11 @@ via useMonaco hook
 */
 /*
   */
+const funcNames = Object.keys(allFuncs);
+let currAlgo = funcNames[Math.floor(Math.random()*(funcNames.length-1))];
  function App(){
-    const testAlgo = exObj;
-    let terminal;
-    const [currText, setCurrText] = useState(exObj);
+    const [currText, setCurrText] = useState(allFuncs[currAlgo].toString());
+    const [terminal, setTerminal] = useState('');
     const editorRef = useRef(null); // Store editor instance
     
     
@@ -34,8 +35,9 @@ via useMonaco hook
 
     function Run(){
         console.log(currText);
-        setCurrText(currText + "console.log(twoSum([1,2,3,4,5], 51));")
-        terminal = eval(currText) ? "true": "false";
+        for(let i = 0; i < allTests[currAlgo].length; i++){
+            eval(`${currText} + console.log(${allTests[currAlgo][i]})`);
+        }
         // let func = currText;
         // console.log(func([1,2,3,4,5], 9));
     }
@@ -43,10 +45,11 @@ via useMonaco hook
     return(
         <div>
             <h1>code editor here?</h1>
-            <Editor height = "60vh" defaultLanguage="javascript" defaultValue={testAlgo} onMount={handleEditorDidMount}/>
+            <Editor height = "60vh" defaultLanguage="javascript" defaultValue={currText} onMount={handleEditorDidMount}/>
             <div>
-                <textarea rows={4} cols={50} value={terminal}></textarea>
+                <textarea rows={4} cols={50} defaultValue={terminal}></textarea>
                 <button onClick={Run}>Run</button>
+                <p>{terminal}</p>
             </div>
         </div>
         

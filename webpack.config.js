@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require ('html-webpack-plugin');
 const path = require('path');
 const MonacoWebpackPlugin = require("monaco-editor-webpack-plugin");
+const { loader } = require('@monaco-editor/react');
 
 module.exports = {
     mode: 'development',
@@ -15,7 +16,7 @@ module.exports = {
             template: path.resolve(__dirname, 'client', 'index.html')
             // template: "/src/index.html"
         }),
-        [new MonacoWebpackPlugin()],
+        //[new MonacoWebpackPlugin()],
     ],
 
     devServer: {
@@ -26,13 +27,13 @@ module.exports = {
         open: true,
         hot: true,
         compress: true,
-        // proxy: [
-        //     {
-        //         context: ['/'],
-        //         target: 'http://localhost:3000',
-        //         changeOrigin: true,
-        //     },
-        // ]
+        proxy: [
+            {
+                context: ['/api'],
+                target: 'http://localhost:3000',
+                changeOrigin: true,
+            },
+        ]
     },
 
 
