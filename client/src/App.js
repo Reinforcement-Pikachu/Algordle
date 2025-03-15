@@ -43,7 +43,7 @@ let currAlgo = funcNames[Math.floor(Math.random()*(funcNames.length-1))];
     }
 
     return(
-        <div>
+        <div id="main">
             <h1>code editor here?</h1>
             <Editor height = "60vh" defaultLanguage="javascript" defaultValue={currText} onMount={handleEditorDidMount}/>
             <div>
