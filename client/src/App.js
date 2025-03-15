@@ -44,7 +44,7 @@ let currAlgo = funcNames[Math.floor(Math.random()*(funcNames.length-1))];
 
     return(
         <div id="main">
-            <h1>code editor here?</h1>
+            <h1>code editor here!</h1>
             <Editor height = "60vh" defaultLanguage="javascript" defaultValue={currText} onMount={handleEditorDidMount}/>
             <div>
                 <textarea rows={4} cols={50} defaultValue={terminal}></textarea>
