@@ -15,6 +15,7 @@ const allFuncs = {
   },
 }
 
+
 const allTests = {
   "twoSum" : ["twoSum([1,2,3,4,5], 9)", "twoSum([1,1,1,1],3)"],
   "addTwo": ["addTwo(4)"],

@@ -5,7 +5,7 @@ const { loader } = require('@monaco-editor/react');
 
 module.exports = {
     mode: 'development',
-    entry: './client/index.js',
+    entry: './client/src/index.js',
     output: {
         path: path.resolve(__dirname, 'build'),
         filename: 'bundle.js',
@@ -13,7 +13,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, 'client', 'index.html')
+            template: path.resolve(__dirname, 'client', 'public', 'index.html')
             // template: "/src/index.html"
         }),
         //[new MonacoWebpackPlugin()],
