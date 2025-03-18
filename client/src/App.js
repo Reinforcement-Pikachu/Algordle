@@ -15,7 +15,7 @@ const funcNames = Object.keys(allFuncs);
 let currAlgo = funcNames[Math.floor(Math.random()*(funcNames.length-1))];
  function App(){
     const [currText, setCurrText] = useState(allFuncs[currAlgo].toString());
-    const [terminal, setTerminal] = useState('');
+    const [terminal, setTerminal] = useState("//Terminal Here");
     const editorRef = useRef(null); // Store editor instance
     
     
@@ -32,12 +32,17 @@ let currAlgo = funcNames[Math.floor(Math.random()*(funcNames.length-1))];
         });
     }
     
+    
 
     function Run(){
         console.log(currText);
+        let output = '';
         for(let i = 0; i < allTests[currAlgo].length; i++){
-            eval(`${currText} + console.log(${allTests[currAlgo][i]})`);
+            output += `${eval(currText + allTests[currAlgo][i])}\n`
+            console.log(currText + allTests[currAlgo][i]);
         }
+        setTerminal(`${output}
+${terminal}`);
         // let func = currText;
         // console.log(func([1,2,3,4,5], 9));
     }
@@ -47,9 +52,8 @@ let currAlgo = funcNames[Math.floor(Math.random()*(funcNames.length-1))];
             <h1>code editor here!</h1>
             <Editor height = "60vh" defaultLanguage="javascript" defaultValue={currText} onMount={handleEditorDidMount}/>
             <div>
-                <textarea rows={4} cols={50} defaultValue={terminal}></textarea>
+                <textarea readOnly rows={10} cols={50} value={terminal}></textarea>
                 <button onClick={Run}>Run</button>
-                <p>{terminal}</p>
             </div>
         </div>
         
