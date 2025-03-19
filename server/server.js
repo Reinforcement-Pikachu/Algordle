@@ -7,6 +7,8 @@ const apiRoute = require('./routes/apiRoute');
 const pgSession = require('connect-pg-simple')(session);
 const cors = require('cors');
 
+const pool = require('./config/db');
+
 const app = express();
 const port = 3000;
 

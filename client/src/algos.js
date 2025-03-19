@@ -21,10 +21,16 @@ const allTests = {
   "addTwo": ["addTwo(4)"],
   "toCelsius": ["toCelsius(251)"]
 }
+
+const allPar = {
+  "twoSum" : 3,
+  "addTwo": 1,
+  "toCelsius": 2,
+}
     
 
     
 
 const exObj = allFuncs;
 
-export {allFuncs, allTests};
+export {allFuncs, allTests, allPar};
