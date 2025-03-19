@@ -2,10 +2,10 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const db = require('../config/db');
-// const app = express();
+const { evaluateSolution } = require('../services/parSystem')
+
 const router = express.Router();
-// const port = 3333;
-// const path = require('path');
+
 
 router.get('/auth/session', (req, res) => {
     req.session.testValue = 'Hello, session!';
@@ -115,24 +115,23 @@ router.post('/auth/logout', (req, res, next) => {
       };
       return next(errorObj);
     }
-  });
+});
+  
+
+//par system route
+router.post('./evaluate', async (req, res) => {
+  const { challengeName, solution } = req.body;
+  
+  if (!challengeName || !solution) {
+    return res.status(400).json({ error: 'Missing the needed fields' });
+  }
+  
+  const evaluate = await evaluateSolution(challengeName, solution);
+  res.json(evaluate);
+
+})
 
 router.use((req, res) => res.sendStatus(404));
 
-module.exports = router; //
+module.exports = router; 
 
-// //global error handler
-// app.use((err, req, res, next) => {
-//     const defaultErr = {
-//       log: 'Express error handler caught unknown middleware error',
-//       status: 500,
-//       message: { err: 'An error occurred' },
-//     };
-//     const errorObj = Object.assign({}, defaultErr, err);
-//     console.log(errorObj.log);
-//     return res.status(errorObj.status).json(errorObj.message);
-//   });
-
-//   app.listen(port, () => {
-//     console.log(`Listening on port ${port}`);
-//   });

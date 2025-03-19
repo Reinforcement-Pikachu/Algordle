@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from "r
 import LoginPage from "./components/LoginPage.jsx";
 import Dashboard from "./components/Dashboard.jsx";
 import { useState, useEffect } from "react";
+import './style.css';
 
 function App() {
   const [user, setUser] = useState(null);
