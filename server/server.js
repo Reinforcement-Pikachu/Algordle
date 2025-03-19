@@ -1,12 +1,12 @@
 //main server (express entry point)
 require('dotenv').config();
+const path = require('path');
 const db = require('./config/db');
 const express = require('express');
 const session = require('express-session');
 const apiRoute = require('./routes/apiRoute');
 const pgSession = require('connect-pg-simple')(session);
 const cors = require('cors');
-
 const pool = require('./config/db');
 
 const app = express();
@@ -15,6 +15,8 @@ const port = 3000;
 app.use(express.json());
 app.use(cors({ origin: 'http://localhost:8000', credentials: true }));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, '../client/public')));
+app.use(express.static(path.join(__dirname, '../build')));
 app.use(
   session({
     store: new pgSession({ pool: db, tableName: 'sessions' }), // Ensure table exists
@@ -25,7 +27,6 @@ app.use(
   })
 );
 
-// app.use(express.static(path.join(__dirname, "public")));
 app.use('/api', apiRoute);
 
 //global error handler

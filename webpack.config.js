@@ -24,6 +24,9 @@ module.exports = {
         static: {
             directory: path.join(__dirname, 'build'),
         },
+        client: {
+            overlay: false, // Disable overlay for warnings
+          },
         open: true,
         hot: true,
         compress: true,
