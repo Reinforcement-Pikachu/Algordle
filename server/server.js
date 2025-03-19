@@ -1,8 +1,11 @@
 //main server (express entry point)
-
+require('dotenv').config();
+const db = require('./config/db');
 const express = require('express');
-// const path = require("path");
+const session = require('express-session');
 const apiRoute = require('./routes/apiRoute');
+const pgSession = require('connect-pg-simple')(session);
+const cors = require('cors');
 
 const pool = require('./config/db');
 
@@ -10,37 +13,33 @@ const app = express();
 const port = 3000;
 
 app.use(express.json());
-app.use(express.urlencoded({ extended : true }));
+app.use(cors({ origin: 'http://localhost:8000', credentials: true }));
+app.use(express.urlencoded({ extended: true }));
+app.use(
+  session({
+    store: new pgSession({ pool: db, tableName: 'sessions' }), // Ensure table exists
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false, httpOnly: true, maxAge: 1000 * 60 * 60 * 24 }, // 1 day
+  })
+);
 
 // app.use(express.static(path.join(__dirname, "public")));
-console.log('server is starting');
-
-app.get('/test-db', async (req, res) => {
-  console.log('recieved request to /test-db');
-  try {
-    const result = await pool.query('SELECT NOW()');
-    console.log('db query result called in server.js:', result.rows[0])
-    res.json({ success: true, time: result.rows[0] });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
-  }
-});
-
 app.use('/api', apiRoute);
-
 
 //global error handler
 app.use((err, req, res, next) => {
-    const defaultErr = {
-      log: 'Express error handler caught unknown middleware error',
-      status: 500,
-      message: { err: 'An error occurred' },
-    };
-    const errorObj = Object.assign({}, defaultErr, err);
-    console.log(errorObj.log);
-    return res.status(errorObj.status).json(errorObj.message);
+  const defaultErr = {
+    log: 'Express error handler caught unknown middleware error',
+    status: 500,
+    message: { err: 'An error occurred' },
+  };
+  const errorObj = Object.assign({}, defaultErr, err);
+  console.log(errorObj.log);
+  return res.status(errorObj.status).json(errorObj.message);
 });
-  
+
 app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
-})
+  console.log(`Server running at http://localhost:${port}`);
+});
