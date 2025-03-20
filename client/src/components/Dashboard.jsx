@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import Editor from '@monaco-editor/react';
 import { allFuncs, allTests } from '../algos';
 import { editor } from 'monaco-editor';
-
+import Layout from "./Layout.jsx";
 /*
 three ways of grabbing monaco instance:
 via onMount/beforeMount
@@ -14,7 +14,7 @@ via useMonaco hook
 const funcNames = Object.keys(allFuncs);
 let currAlgo = funcNames[Math.floor(Math.random() * (funcNames.length - 1))];
 
-function Dashboard({user, setUser}) {
+function Dashboard({user, setUser, isDarkMode, toggleTheme}) {
   const [currText, setCurrText] = useState(allFuncs[currAlgo].toString());
   const [terminal, setTerminal] = useState('//output');
   const [counter, setCounter] = useState(1);
@@ -24,6 +24,9 @@ function Dashboard({user, setUser}) {
   function handleEditorDidMount(editor, monaco) {
     editorRef.current = editor;
 
+    const theme = isDarkMode ? 'vs-dark' : 'vs-light';
+    editor.updateOptions({ theme });
+
     // console.log("Editor mounted:", editorRef.current); // Debugging log
 
     // Listen for content changes
@@ -32,11 +35,8 @@ function Dashboard({user, setUser}) {
       setCurrText(text);
       console.log('Current text:', text);
     });
-  }
-  const handleLogout = async () => {
-    await fetch("/api/auth/logout", { method: "POST", credentials: "include" });
-    setUser(null);
   };
+
 
   const submitSolution = async () => {
     try {
@@ -94,6 +94,8 @@ function Dashboard({user, setUser}) {
 
 
   return (
+    <Layout user={user} isDarkMode={isDarkMode} toggleTheme={toggleTheme} setUser={setUser}>
+       <h1>Welcome, {user.username}!</h1>
     <div id='main'>
       <h1>code editor here!</h1>
       <Editor
@@ -101,16 +103,17 @@ function Dashboard({user, setUser}) {
         defaultLanguage='javascript'
         defaultValue={currText}
         onMount={handleEditorDidMount}
+        theme={isDarkMode ? 'vs-dark' : 'vs-light'}
       />
       <div>
-        <textarea readOnly rows={10} cols={50} value={terminal}></textarea>
+        <textarea readOnly rows={10} cols={50} value={terminal} className={isDarkMode ? 'dark-mode-textarea' : 'light-mode-textarea'}></textarea>
         <button onClick={Run}>Run</button>
         <button onClick={Clear}>Clear</button>
         <button onClick={submitSolution}>Submit Code</button>
       </div>
       {feedback && <p>Feedback: {feedback}</p>} 
-      {user && <button onClick={handleLogout}>Logout</button>}
     </div>
+    </Layout>
   );
 }
 
