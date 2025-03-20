@@ -131,6 +131,39 @@ router.post('./evaluate', async (req, res) => {
 
 })
 
+// router.get('/challenges', async (req, res, next) => {
+//   try {
+//     const result = await db.query('SELECT id, name, code, par FROM algorithms');
+
+//     const challenges = result.rows.map(challenge => ({
+//       id: challenge.id,
+//       name: challenge.name,
+//       function_definition: challenge.code.signature,
+//       par_score: challenge.par
+//     }));
+//     return res.status(200).json(challenges);
+//   } catch (err) {
+//     const errorObj = {
+//       log: `/challenges: ERROR: ${err.message}`,
+//       message: {err: '/challenges: ERROR: Failed to fetch challenges'},
+//     };
+//     return next(errorObj);
+//   }
+// })
+router.get('/challenges', async (req, res, next) => {
+  try {
+    const result = await db.query('SELECT id, name, code->>\'signature\' AS function_signature, par FROM algorithms');
+    console.log(result.rows);
+    return res.status(200).json(result.rows);
+  } catch (err) {
+    return next({
+      log: `/challenges: ERROR: ${err.message}`,
+      message: { err: '/challenges: ERROR: Failed to fetch challenges' },
+    });
+  }
+});
+
+
 router.use((req, res) => res.sendStatus(404));
 
 module.exports = router; 

@@ -12,10 +12,12 @@ via useMonaco hook
 /*
  */
 const funcNames = Object.keys(allFuncs);
-let currAlgo = funcNames[Math.floor(Math.random() * (funcNames.length - 1))];
+// let currAlgo = funcNames[Math.floor(Math.random() * (funcNames.length - 1))];
 
-function Dashboard({user, setUser}) {
-  const [currText, setCurrText] = useState(allFuncs[currAlgo].toString());
+function Dashboard({user, setUser, selectedAlgo}) {
+  console.log(selectedAlgo);
+  const [currText, setCurrText] = useState(`function ${selectedAlgo.function_signature} {}`);
+  // const [currText, setCurrText] = useState(allFuncs[currAlgo].toString());
   const [terminal, setTerminal] = useState('//output');
   const [counter, setCounter] = useState(1);
   const [feedback, setFeedback] = useState(null);
@@ -68,9 +70,9 @@ function Dashboard({user, setUser}) {
       originalConsoleLog.apply(console, args); // actually log to the browser console
     }
     try {
-          for (let i = 0; i < allTests[currAlgo].length; i++) {
+          for (let i = 0; i < allTests[selectedAlgo].length; i++) {
             // run all tests
-      output += `${eval(override + '\n' + currText + allTests[currAlgo][i])}\n`;
+      output += `${eval(override + '\n' + currText + allTests[selectedAlgo][i])}\n`;
     }
 
   

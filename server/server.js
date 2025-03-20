@@ -5,6 +5,7 @@ const db = require('./config/db');
 const express = require('express');
 const session = require('express-session');
 const apiRoute = require('./routes/apiRoute');
+const leaderboardRoute = require('./routes/leaderboardRoute');
 const pgSession = require('connect-pg-simple')(session);
 const cors = require('cors');
 const pool = require('./config/db');
@@ -28,7 +29,7 @@ app.use(
 );
 
 app.use('/api', apiRoute);
-
+app.use('/api/leaderboard', leaderboardRoute);
 //global error handler
 app.use((err, req, res, next) => {
   const defaultErr = {
