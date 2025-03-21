@@ -140,7 +140,7 @@ function Dashboard({user, setUser, selectedAlgo, isDarkMode, toggleTheme}) {
         <button onClick={Run}>Run</button>
         <button onClick={Clear}>Clear</button>
         <button onClick={submitSolution}>Submit Code</button>
-        {user && <button onClick={handleLogout}>Logout</button>}  
+        {/* {user && <button onClick={handleLogout}>Logout</button>}   */}
         {feedback && `Feedback: ${feedback}`} 
       </div>
       {feedback && <p>Feedback: {feedback}</p>} 
