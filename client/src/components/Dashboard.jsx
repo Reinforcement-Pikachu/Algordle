@@ -82,7 +82,7 @@ function Dashboard({user, setUser, selectedAlgo, isDarkMode, toggleTheme}) {
 
     // console.log(currentText: currText);
     //const override = `console.tempLog = console.log; \n console.log = function(value){return value;};\n`
-    const override = '';
+    // const override = '';
     let output = '';
     let logs = '';
     const originalConsoleLog = console.log; // Store default console log prototype to actually use for logging to browser console and for reverting the prototype on line 60
@@ -92,11 +92,17 @@ function Dashboard({user, setUser, selectedAlgo, isDarkMode, toggleTheme}) {
       originalConsoleLog.apply(console, args); // actually log to the browser console
     }
     try {
-          for (let i = 0; i < allTests[selectedAlgo].length; i++) {
-            // run all tests
-      output += `${eval(override + '\n' + currText + allTests[selectedAlgo][i])}\n`;
-    }
+      if (!selectedAlgo || !allTests[selectedAlgo.name]) {
+        throw new Error('invalid algo selection');
+      }
+      // const executeCode = new Function(currText);
 
+          for (let i = 0; i < allTests[selectedAlgo.name].length; i++) {
+            //run all tests
+            output += `${eval(currText + allTests[selectedAlgo.name][i])}\n`;
+            //  output += `${executeCode()}\n`
+      }
+  
   
     } catch (err) {
       output += `Error: ${err.message}\n` // log errors when there are any
@@ -134,6 +140,8 @@ function Dashboard({user, setUser, selectedAlgo, isDarkMode, toggleTheme}) {
         <button onClick={Run}>Run</button>
         <button onClick={Clear}>Clear</button>
         <button onClick={submitSolution}>Submit Code</button>
+        {/* {user && <button onClick={handleLogout}>Logout</button>}   */}
+        {feedback && `Feedback: ${feedback}`} 
       </div>
       {feedback && <p>Feedback: {feedback}</p>} 
     </div>
