@@ -1,0 +1,128 @@
+/* General Styles */
+.login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  
+  .login-box {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0; /* Prevents items from expanding */
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    border-radius: 10px;
+    width: 320px;
+    text-align: center;
+  }
+/* form{
+    margin-bottom: -10px;
+} */
+  /* Inputs - No Border */
+.login-box input {
+  width: calc(100% - 24px); /* Adjust width to match other elements */
+  padding: 12px;
+  font-size: 1rem;
+  margin: 5px 0px;
+  border: none;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.2);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  outline: none;
+  text-align: center; /* Align text */
+}
+
+.login-box .login-btn {
+    width: 30%;
+    padding: 12px;
+    margin:10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .login-box .toggle-btn{
+    width: 70%;
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  /* Input Focus - Makes it Clear */
+  .login-box input:focus {
+    background: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Soft glow effect */
+  }
+  
+  /* Light Mode */
+  body.light .login-container {
+    background: #f4f4f4;
+  }
+  
+  body.light .login-box input {
+    background: rgba(0, 0, 0, 0.05);
+    color: black;
+  }
+  
+  body.light .login-box input {
+    background-color: white;
+    color: black;
+    border: 1px solid #ccc;
+  }
+  body.light .login-box input:focus {
+    background: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  body.light .login-box button {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  body.light .login-box button:hover {
+    background-color: #0056b3;
+  }
+  
+  body.light .toggle-btn {
+    color: #007bff;
+  }
+  
+  /* Dark Mode */
+  body.dark .login-container {
+    background: #1e1e1e;
+  }
+  
+  body.dark .login-box {
+    background: #2c2c2c;
+    color: white;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+  }
+  
+  body.dark .login-box input {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+  }
+  body.dark .login-box input:focus {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+  }
+  
+  
+  body.dark .login-box button {
+    background-color: #007bff;
+  }
+  
+  body.dark .login-box button:hover {
+    background-color: #0056b3;
+  }
+  
+  body.dark .toggle-btn {
+    color: #00aaff;
+  }
+  
