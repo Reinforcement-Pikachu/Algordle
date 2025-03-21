@@ -77,7 +77,7 @@ function Dashboard({user, setUser, selectedAlgo, isDarkMode, toggleTheme}) {
 
   
     } catch (err) {
-      output += `Error: ${error.message}\n` // log errors when there are any
+      output += `Error: ${err.message}\n` // log errors when there are any
     } finally {
       console.log = originalConsoleLog; // revert console.log prototype back to default
     }

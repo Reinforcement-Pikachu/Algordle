@@ -62,9 +62,9 @@ function App() {
       <Route
           path="/"
           // element={user ? <Dashboard user={user} setUser={setUser}/> : <LoginPage user={user} setUser={setUser} /> }
-          element={user ? <ChooseAlgo user={user} setUser={setUser} setSelectedAlgo={setSelectedAlgo}/> : <LoginPage user={user} setUser={setUser} /> }
+          element={user ? <ChooseAlgo user={user} setUser={setUser} setSelectedAlgo={setSelectedAlgo} isDarkMode={isDarkMode} toggleTheme={toggleTheme}/> : <LoginPage user={user} setUser={setUser} /> }
         />
-        <Route path="/dashboard" element={user ? <Dashboard user={user} selectedAlgo={selectedAlgo} /> : <LoginPage setUser={setUser} />} />
+        <Route path="/dashboard" element={user ? <Dashboard user={user} selectedAlgo={selectedAlgo} isDarkMode={isDarkMode} toggleTheme={toggleTheme}/> : <LoginPage setUser={setUser} />} />
       </Routes>
     </Router>
     </ThemeProvider>

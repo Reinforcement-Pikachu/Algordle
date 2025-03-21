@@ -2,9 +2,9 @@ import React, { useRef, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from "react-router-dom";
 // import { useNavigate } from 'react-router-dom';
 import Dashboard from './Dashboard.jsx';
+import Layout from "./Layout.jsx";
 
-
-function ChooseAlgo({user, setUser, setSelectedAlgo}) {
+function ChooseAlgo({user, setUser, setSelectedAlgo, isDarkMode, toggleTheme}) {
     const [algorithms, setAlgos] = useState([]);
     const navigate = useNavigate();
     
