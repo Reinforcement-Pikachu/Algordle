@@ -11,7 +11,7 @@ function App() {
   const [selectedAlgo, setSelectedAlgo] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/auth/session", { credentials: "include" })
+    fetch("http://localhost:3000/api/auth/session", { credentials: "include" })
       .then(async (res) => {
         if (!res.ok) {
           const errorData = await res.json().catch(() => null);

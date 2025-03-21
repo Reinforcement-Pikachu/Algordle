@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Editor from '@monaco-editor/react';
 import { allFuncs, allTests } from '../algos';
 import { editor } from 'monaco-editor';
@@ -16,7 +16,13 @@ const funcNames = Object.keys(allFuncs);
 
 function Dashboard({user, setUser, selectedAlgo}) {
   console.log(selectedAlgo);
-  const [currText, setCurrText] = useState(`function ${selectedAlgo.function_signature} {}`);
+
+  const [currText, setCurrText] = useState("");
+  useEffect(() => {
+    if(selectedAlgo) {
+      setCurrText(`function ${selectedAlgo.function_signature} {}`)
+    }
+  }, [selectedAlgo]);
   // const [currText, setCurrText] = useState(allFuncs[currAlgo].toString());
   const [terminal, setTerminal] = useState('//output');
   const [counter, setCounter] = useState(1);
@@ -41,13 +47,29 @@ function Dashboard({user, setUser, selectedAlgo}) {
   };
 
   const submitSolution = async () => {
+    if (!selectedAlgo) {
+      console.error("No algorithm selected!");
+      return;
+    }
     try {
       const response = await fetch('http://localhost:3000/api/evaluate', {
         method: 'POST',
         headers: { 'Content-type': "application/json" },
-        body: JSON.stringify({ challengeName: currAlgo, solution: currText }),
+        body: JSON.stringify({ challengeName: selectedAlgo?.name, solution: currText }),
       });
-      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(
+          `Server Error: ${response.status} ${response.statusText}`
+        );
+      }
+      let data;
+      try {
+        data = await response.json();
+      } catch (error) {
+        throw new Error(
+          "Server did not return JSON. Response was: " + response.statusText
+        );
+      }
       setFeedback(data.result || 'Error in evaluation');
       setTerminal(prevTerminal => `${data.result}\n${prevTerminal}`);
     } catch (err) {
@@ -77,7 +99,7 @@ function Dashboard({user, setUser, selectedAlgo}) {
 
   
     } catch (err) {
-      output += `Error: ${error.message}\n` // log errors when there are any
+      output += `Error: ${err.message}\n` // log errors when there are any
     } finally {
       console.log = originalConsoleLog; // revert console.log prototype back to default
     }

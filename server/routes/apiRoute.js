@@ -119,10 +119,13 @@ router.post('/auth/logout', (req, res, next) => {
   
 
 //par system route
-router.post('./evaluate', async (req, res) => {
+router.post('/evaluate', async (req, res) => {
   const { challengeName, solution } = req.body;
   
+  console.log("Received Request:", { challengeName, solution });
+
   if (!challengeName || !solution) {
+    console.error("Missing challengeName or solution", req.body);
     return res.status(400).json({ error: 'Missing the needed fields' });
   }
   
