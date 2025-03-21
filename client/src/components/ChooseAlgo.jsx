@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from "react-router-dom";
 // import { useNavigate } from 'react-router-dom';
 import Dashboard from './Dashboard.jsx';
-import Layout from "./Layout.jsx";
+import '../styles/ChooseAlgo.css';import Layout from "./Layout.jsx";
 
 function ChooseAlgo({user, setUser, setSelectedAlgo, isDarkMode, toggleTheme}) {
     const [algorithms, setAlgos] = useState([]);
@@ -50,17 +50,19 @@ function ChooseAlgo({user, setUser, setSelectedAlgo, isDarkMode, toggleTheme}) {
     }
         
     return (
-        <div>
-            <h2>Choose algorithm</h2>
+        <div className="choose-algo-container">
+            <h2>Choose an Algorithm</h2>
             {algorithms.length === 0 ? (
-                <p>Loading algos..</p>
-            ) : (algorithms.map((algo) => (
-                <button key={algo.id} onClick={() => submitAlgo(algo)}>
-                    {algo.id}. {algo.name}
-                </button>
-            ))
+                <p className="loading-text">Loading algos...</p>
+            ) : (
+                <div className="algo-buttons">
+                    {algorithms.sort((a,b) =>a.par- b.par).map((algo) => (
+                        <button key={algo.id} onClick={() => submitAlgo(algo)}>
+                            {algo.par}. {algo.name}
+                        </button>
+                    ))}
+                </div>
             )}
-        
         </div>
     );
 }

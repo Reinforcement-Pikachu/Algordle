@@ -22,6 +22,9 @@ function Layout({ user, children, isDarkMode, toggleTheme, setUser }) {
             <li>
               <Link to='/settings'>Settings</Link>
             </li>
+            <li>
+              <Link to='/ChooseAlgo'>Algos</Link>
+            </li>
           </ul>
           <div className='nav-actions'>
             {user && (
