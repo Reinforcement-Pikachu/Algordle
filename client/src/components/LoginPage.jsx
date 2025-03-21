@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import '../styles/LoginPage.css';
 
 function LoginPage({ setUser, user }) {
   const [username, setUsername] = useState('');
@@ -33,26 +34,28 @@ function LoginPage({ setUser, user }) {
  
 
   return (
-    <div>
-      <h2>{isSignUp ? "Signup" : "Login"}</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">{isSignUp ? "Sign Up" : "Login"}</button>
-      </form>
-      <button onClick={() => setIsSignUp(!isSignUp)}>
-        {isSignUp ? "Already have an account? Login" : "Need an account? Sign up"}
-      </button>
+    <div className="login-container">
+      <div className="login-box">
+        <h2>{isSignUp ? "Signup" : "Login"}</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button className="login-btn" type="submit">{isSignUp ? "Sign Up" : "Login"}</button>
+        </form>
+        <button className="toggle-btn" onClick={() => setIsSignUp(!isSignUp)}>
+          {isSignUp ? "Already have an account? Login" : "Need an account? Sign up"}
+        </button>
+      </div>
     </div>
   );
 }

@@ -1,0 +1,79 @@
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between; /* Space out logo and right-aligned content */
+    align-items: center; /* Vertically center items */
+    width: 100%;
+    padding: 10px 10px; /* Add padding to prevent content from touching edges */
+    box-sizing: border-box; /* Ensure padding is included in the width */
+  }
+  
+  /* Logo */
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-right: auto; /* Push logo to the left */
+  }
+  
+  /* Right-aligned container for links and buttons */
+  .nav-right {
+    display: flex;
+    align-items: center; /* Vertically center links and buttons */
+    gap: 20px; /* Space between links and buttons */
+  }
+  
+  /* Nav Links */
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px; /* Space between links */
+    padding: 0;
+    margin: 0;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: inherit;
+    font-size: 1rem;
+    transition: color 0.3s;
+  }
+  
+  .nav-links a:hover {
+    color: #007bff;
+  }
+  
+  /* Nav Actions */
+  .nav-actions {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+  }
+  
+  /* Buttons */
+  .theme-toggle,
+  .logout-btn {
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background 0.3s;
+  }
+  
+  .theme-toggle {
+    background: #007bff;
+    color: white;
+  }
+  
+  .theme-toggle:hover {
+    background: #0056b3;
+  }
+  
+  .logout-btn {
+    background: #ff4d4d;
+    color: white;
+  }
+  
+  .logout-btn:hover {
+    background: #cc0000;
+  }
+  

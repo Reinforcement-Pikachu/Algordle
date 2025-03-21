@@ -155,7 +155,7 @@ router.post('.//evaluate', async (req, res) => {
 // })
 router.get('/challenges', async (req, res, next) => {
   try {
-    const result = await db.query('SELECT id, name, code->>\'signature\' AS function_signature, par FROM algorithms');
+    const result = await db.query('SELECT id, name, code->>\'signature\' AS function_signature, par, tests FROM algorithms');
     console.log(result.rows);
     return res.status(200).json(result.rows);
   } catch (err) {
