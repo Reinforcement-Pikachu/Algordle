@@ -4,6 +4,7 @@
     justify-content: space-between; /* Space out logo and right-aligned content */
     align-items: center; /* Vertically center items */
     width: 100%;
+    background-color: black;
     padding: 10px 10px; /* Add padding to prevent content from touching edges */
     box-sizing: border-box; /* Ensure padding is included in the width */
   }
@@ -76,4 +77,5 @@
   .logout-btn:hover {
     background: #cc0000;
   }
+  
   

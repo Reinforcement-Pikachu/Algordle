@@ -8,6 +8,7 @@
   }
   
   .login-box {
+    border: 2px solid rgba(255, 255, 255, 0.3); /* White with some transparency */
     display: flex;
     flex-direction: column;
     flex-grow: 0; /* Prevents items from expanding */
@@ -92,6 +93,10 @@
   body.light .toggle-btn {
     color: #007bff;
   }
+
+  body.light .login-box {
+    border: 2px solid rgba(0, 0, 0, 0.3); /* Darker border for light mode */
+  }
   
   /* Dark Mode */
   body.dark .login-container {
@@ -102,6 +107,9 @@
     background: #2c2c2c;
     color: white;
     box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+  }
+  body.dark .login-box {
+    border: 2px solid rgba(255, 255, 255, 0.3); /* Lighter border for dark mode */
   }
   
   body.dark .login-box input {
@@ -126,3 +134,6 @@
     color: #00aaff;
   }
   
+  .login-box {
+    transform: translateY(-50px); /* Adjust this value to move it up/down */
+  }

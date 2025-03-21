@@ -31,12 +31,20 @@ function Dashboard({user, setUser, selectedAlgo, isDarkMode, toggleTheme}) {
 
   function handleEditorDidMount(editor, monaco) {
     editorRef.current = editor;
-
-    const theme = isDarkMode ? 'vs-dark' : 'vs-light';
-    editor.updateOptions({ theme });
-
-    // console.log("Editor mounted:", editorRef.current); // Debugging log
-
+    const editorContainer = editor.getContainerDomNode();
+  
+    // Initial opacity for fade effect
+    editorContainer.style.transition = "opacity 0.5s ease-in-out";
+    editorContainer.style.opacity = 0; // Fade out
+  
+    setTimeout(() => {
+      editor.updateOptions({ theme: isDarkMode ? 'vs-dark' : 'vs-light' });
+  
+      setTimeout(() => {
+        editorContainer.style.opacity = 1; // Fade back in after theme update
+      }, 300); // Adjust delay for smooth effect
+    }, 300); // Delay before changing theme
+  
     // Listen for content changes
     editor.onDidChangeModelContent(() => {
       const text = editor.getValue();
@@ -92,14 +100,22 @@ function Dashboard({user, setUser, selectedAlgo, isDarkMode, toggleTheme}) {
       originalConsoleLog.apply(console, args); // actually log to the browser console
     }
     try {
-      if (!selectedAlgo || !allTests[selectedAlgo.name]) {
+      const response = await fetch('http://localhost:3000/api/challenges');
+      const data = await response.json();
+      if (!selectedAlgo) {
         throw new Error('invalid algo selection');
       }
+      // console.log("the algo", selectedAlgo);
+      // console.log(data);
+      let tests;
+      for(let i = 0; i < data.length; i++){
+        if(data[i].id == selectedAlgo.id) tests = data[i].tests;
+      }
       // const executeCode = new Function(currText);
-
-          for (let i = 0; i < allTests[selectedAlgo.name].length; i++) {
+      // console.log(Object.values(tests));
+          for (let i = 0; i < Object.values(tests).length; i++) {
             //run all tests
-            output += `${eval(currText + allTests[selectedAlgo.name][i])}\n`;
+            output += `${Object.values(tests)[i]} ==> ${eval(currText + Object.values(tests)[i])}\n`;
             //  output += `${executeCode()}\n`
       }
   
@@ -137,9 +153,9 @@ function Dashboard({user, setUser, selectedAlgo, isDarkMode, toggleTheme}) {
       />
       <div>
         <textarea readOnly rows={10} cols={50} value={terminal} className={isDarkMode ? 'dark-mode-textarea' : 'light-mode-textarea'}></textarea>
-        <button onClick={Run}>Run</button>
-        <button onClick={Clear}>Clear</button>
-        <button onClick={submitSolution}>Submit Code</button>
+        <button className='clear-btn' onClick={Clear}>X</button>
+        <button className='run-btn' onClick={Run}>Run</button>
+        <button className='submit-btn' onClick={submitSolution}>Submit Code</button>
         {/* {user && <button onClick={handleLogout}>Logout</button>}   */}
         {feedback && `Feedback: ${feedback}`} 
       </div>
