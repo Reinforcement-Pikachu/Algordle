@@ -60,10 +60,13 @@ function Dashboard({user, setUser, selectedAlgo, isDarkMode, toggleTheme}) {
       return;
     }
     try {
-      const response = await fetch('http://localhost:3000/api/evaluate', {
-        method: 'POST',
-        headers: { 'Content-type': "application/json" },
-        body: JSON.stringify({ challengeName: selectedAlgo?.name, solution: currText }),
+      const response = await fetch("http://localhost:3000/api/evaluate", {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({
+          challengeName: selectedAlgo?.name,
+          solution: currText,
+        }),
       });
       if (!response.ok) {
         throw new Error(
@@ -78,8 +81,19 @@ function Dashboard({user, setUser, selectedAlgo, isDarkMode, toggleTheme}) {
           "Server did not return JSON. Response was: " + response.statusText
         );
       }
-      setFeedback(data.result || 'Error in evaluation');
-      setTerminal(prevTerminal => `${data.result}\n${prevTerminal}`);
+      setFeedback(data.result || "Error in evaluation");
+
+      // test results
+      let testOutput = `Results for ${selectedAlgo.name}:\n`;
+      data.testResults.forEach((test) => {
+        testOutput += `Test: ${test.test}\nExpected: ${test.expected}\nGot: ${
+          test.actual
+        }\nPassed: ${test.passed ? "✅" : "❌"}\n\n`;
+      });
+      
+      // setTerminal((prevTerminal) => `${data.result}\n${prevTerminal}`);
+      setTerminal((prevTerminal) => `${testOutput}\n${prevTerminal}`);
+
     } catch (err) {
       console.error('Error submiting solution:', err);
       setFeedback('Server error');
